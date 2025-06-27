@@ -18,6 +18,7 @@ This is an attribution to doctor Ammar Mohanna and his contributions to the AI s
 - Automated smoke and pressure tests
 - **Scene graph** construction for advanced spatial understanding
 - Uses a modular architecture with a dedicated submodule for camera tracking and scene graphing
+- Saves User's favorite path to destination
 
 ## How to Use
 1. **Recording a Path:**
