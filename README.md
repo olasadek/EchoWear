@@ -365,21 +365,6 @@ sudo apt-get install alsa-utils espeak ffmpeg
 python -c "import pyttsx3; engine = pyttsx3.init(); engine.say('Test'); engine.runAndWait()"
 ```
 
-## 📈 Future Roadmap
-
-### Planned Features
-- **Advanced Scene Understanding**: Multi-object relationship detection
-- **Semantic Navigation**: Natural language navigation commands
-- **Cloud Integration**: Optional cloud-based scene analysis
-- **Mobile App**: Companion mobile application
-- **Wearable Optimization**: Optimized for wearable hardware
-- **Multi-Language Support**: Internationalization support
-
-### Research Areas
-- **Advanced Computer Vision**: State-of-the-art object detection
-- **Natural Language Processing**: Better scene descriptions
-- **Spatial AI**: Advanced spatial reasoning
-- **Accessibility**: Enhanced accessibility features
 
 ## 📄 License
 
@@ -388,4 +373,5 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ---
 
 *⚠️ Disclaimer: This project is a prototype for research and educational purposes. It is not intended for medical or safety-critical use. Always ensure proper safety measures when testing navigation systems.*
+
 *In honor of Dr. Ammar Mohanna for his invaluable contributions to the AI community in Lebanon and continuous support.*
