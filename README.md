@@ -263,6 +263,16 @@ python test_camera.py     # Camera testing
 
 ## 🛠️ Development & Contributing
 
+### Development Setup
+```bash
+# Clone with submodules
+git clone --recursive <your-repo-url>
+cd EchoWear
+
+# Install development dependencies
+pip install -r requirements.txt
+pip install pytest pytest-cov
+
 ### Project Structure
 ```
 EchoWear/
@@ -287,16 +297,6 @@ EchoWear/
 └── requirements.txt              # Python dependencies
 ```
 
-### Development Setup
-```bash
-# Clone with submodules
-git clone --recursive <your-repo-url>
-cd EchoWear
-
-# Install development dependencies
-pip install -r requirements.txt
-pip install pytest pytest-cov
-
 # Run tests
 pytest
 
@@ -312,8 +312,8 @@ python -m pdb gui_app.py
 5. Submit a pull request
 
 **Areas for Contribution:**
-- Enhanced scene graph algorithms
 - Improved object detection models
+- Enhanced scene graph algorithms 
 - Better TTS and voice guidance
 - Performance optimizations
 - Accessibility improvements
