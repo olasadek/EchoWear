@@ -90,7 +90,15 @@ def detections_to_serializable(detections):
 
 class PathManager:
     def __init__(self, storage_dir="paths", enable_object_detection=True, 
-                 nfeatures=1000, scaleFactor=1.2, nlevels=8):
+                 nfeatures=1000, scaleFactor=1.2, nlevels=8,
+                 min_matches=4,  # Reduced from 8
+                 ransac_prob=0.95,  # Reduced from 0.999
+                 ransac_threshold=2.0,  # Increased from 1.0
+                 position_threshold=1.0,  # Increased from 0.5
+                 orientation_threshold_large=0.5,  # Increased from 0.3 (~29 degrees)
+                 orientation_threshold_small=0.2,  # Increased from 0.12 (~11 degrees)
+                 loop_closure_threshold=0.3,  # Increased from 0.1
+                 detection_confidence=0.3):  # Reduced from 0.5
         self.storage_dir = storage_dir
         os.makedirs(self.storage_dir, exist_ok=True)
         self.recording = False
@@ -106,8 +114,16 @@ class PathManager:
         self.poses = []
         self.current_pose = np.eye(4)  # Current estimated pose
         
+        # Configurable thresholds for more flexible operation
+        self.min_matches = min_matches
+        self.ransac_prob = ransac_prob
+        self.ransac_threshold = ransac_threshold
+        self.position_threshold = position_threshold
+        self.orientation_threshold_large = orientation_threshold_large
+        self.orientation_threshold_small = orientation_threshold_small
+        
         # Loop closure detection
-        self.loop_closure_threshold = 0.1
+        self.loop_closure_threshold = loop_closure_threshold
         self.pose_history = []
         
         # Object detection
@@ -117,7 +133,7 @@ class PathManager:
             try:
                 self.object_detector = ObjectDetector(
                     backend=DetectionBackend.OPENCV_DNN,
-                    confidence_threshold=0.5
+                    confidence_threshold=detection_confidence
                 )
                 print("Object detection enabled")
             except Exception as e:
@@ -254,10 +270,12 @@ class PathManager:
             if self.last_kp is not None and self.last_desc is not None and desc is not None:
                 matches = self.bf.match(self.last_desc, desc)
                 matches = sorted(matches, key=lambda x: x.distance)
-                if len(matches) > 8:
+                if len(matches) > self.min_matches:  # Use configurable threshold
                     src_pts = np.float32([self.last_kp[m.queryIdx].pt for m in matches]).reshape(-1, 1, 2)
                     dst_pts = np.float32([kp[m.trainIdx].pt for m in matches]).reshape(-1, 1, 2)
-                    E, mask = cv2.findEssentialMat(src_pts, dst_pts, focal=1.0, pp=(0., 0.), method=cv2.RANSAC, prob=0.999, threshold=1.0)
+                    E, mask = cv2.findEssentialMat(src_pts, dst_pts, focal=1.0, pp=(0., 0.), 
+                                                 method=cv2.RANSAC, prob=self.ransac_prob, 
+                                                 threshold=self.ransac_threshold)
                     if E is not None:
                         _, R, t, mask_pose = cv2.recoverPose(E, src_pts, dst_pts)
                         # Compose pose
@@ -278,10 +296,12 @@ class PathManager:
             if self.last_kp is not None and self.last_desc is not None and desc is not None:
                 matches = self.bf.match(self.last_desc, desc)
                 matches = sorted(matches, key=lambda x: x.distance)
-                if len(matches) > 8:
+                if len(matches) > self.min_matches:  # Use configurable threshold
                     src_pts = np.float32([self.last_kp[m.queryIdx].pt for m in matches]).reshape(-1, 1, 2)
                     dst_pts = np.float32([kp[m.trainIdx].pt for m in matches]).reshape(-1, 1, 2)
-                    E, mask = cv2.findEssentialMat(src_pts, dst_pts, focal=1.0, pp=(0., 0.), method=cv2.RANSAC, prob=0.999, threshold=1.0)
+                    E, mask = cv2.findEssentialMat(src_pts, dst_pts, focal=1.0, pp=(0., 0.), 
+                                                 method=cv2.RANSAC, prob=self.ransac_prob, 
+                                                 threshold=self.ransac_threshold)
                     if E is not None:
                         _, R, t, mask_pose = cv2.recoverPose(E, src_pts, dst_pts)
                         pose = np.eye(4)
@@ -376,11 +396,11 @@ class PathManager:
             
             # Generate guidance
             guidance = []
-            if position_deviation > 0.5:
+            if position_deviation > self.position_threshold:  # Use configurable threshold
                 guidance.append("Position off")
             
             # Use only natural language for orientation
-            if orientation_diff > 0.12:  # ~7 degrees
+            if orientation_diff > self.orientation_threshold_small:  # Use configurable threshold
                 # Use the new _get_directional_guidance
                 direction = self._get_directional_guidance(current_pose, path_pose)
                 guidance.append(direction)
@@ -444,9 +464,9 @@ class PathManager:
             direction = "right"
         
         # Lower threshold for turn, use natural language
-        if angle > 0.3:  # ~17 degrees
+        if angle > self.orientation_threshold_large:  # Use configurable threshold
             return f"turn {direction}"
-        elif angle > 0.12:  # ~7 degrees
+        elif angle > self.orientation_threshold_small:  # Use configurable threshold
             return f"turn a bit {direction}"
         else:
             return "move forward"

@@ -194,7 +194,7 @@ Navigation instruction:"""
         # Check for immediate hazards
         if hazards:
             closest_hazard = min(hazards, key=lambda x: x.get('distance', float('inf')))
-            if closest_hazard.get('distance', 0) < 1.5:
+            if closest_hazard.get('distance', 0) < 2.5:  # Increased from 1.5 for more flexibility
                 return NavigationInstruction(
                     command=NavigationCommand.STOP,
                     description=f"Stop! {closest_hazard['label']} detected ahead",
@@ -208,7 +208,7 @@ Navigation instruction:"""
             closest_obstacle = spatial_analysis.get('closest_obstacle')
             if closest_obstacle:
                 distance = closest_obstacle.get('distance', 0)
-                if distance < 1.0:
+                if distance < 1.5:  # Increased from 1.0 for more flexibility
                     return NavigationInstruction(
                         command=NavigationCommand.OBSTACLE_AHEAD,
                         description=f"Obstacle ahead: {closest_obstacle['label']}",
@@ -433,7 +433,7 @@ class LLMNavigator:
             'obstacles': obstacles,
             'navigation_points': navigation_points,
             'spatial_analysis': {
-                'path_clear': not any(obj['distance'] < 2.0 for obj in obstacles if obj['distance'])
+                'path_clear': not any(obj['distance'] < 3.0 for obj in obstacles if obj['distance'])
             }
         }
     

@@ -1,4 +1,5 @@
 version: '3.8'
+
 services:
   echowear-gui:
     build: .
@@ -6,21 +7,30 @@ services:
     environment:
       - DISPLAY=${DISPLAY}
       - QT_X11_NO_MITSHM=1
+      - OPENCV_VIDEOIO_PRIORITY_MSMF=0
+      - PYTHONPATH=/app
+      - PYTHONUNBUFFERED=1
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - ./demo_paths:/app/demo_paths
       - ./models:/app/models
+      - ./output:/app/output
+      - ./llm-camera-tracker:/app/llm-camera-tracker
     devices:
       - /dev/snd:/dev/snd
+      - /dev/video0:/dev/video0
     privileged: true
     stdin_open: true
     tty: true
-    # Uncomment the following if you want to use PulseAudio instead of ALSA
-    # environment:
-    #   - PULSE_SERVER=unix:${XDG_RUNTIME_DIR}/pulse/native
-    # volumes:
-    #   - ${XDG_RUNTIME_DIR}/pulse/native:${XDG_RUNTIME_DIR}/pulse/native
-    #   - /run/user/1000/pulse:/run/user/1000/pulse
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import cv2; print('OpenCV available')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - echowear-network
 
   echowear-test:
     build: .
@@ -29,8 +39,81 @@ services:
     volumes:
       - ./demo_paths:/app/demo_paths
       - ./models:/app/models
+      - ./output:/app/output
+      - ./llm-camera-tracker:/app/llm-camera-tracker
     devices:
       - /dev/snd:/dev/snd
+      - /dev/video0:/dev/video0
     privileged: true
     stdin_open: true
     tty: true
+    restart: "no"
+    networks:
+      - echowear-network
+
+  echowear-demo:
+    build: .
+    container_name: echowear-demo
+    command: python enhanced_path_manager_demo.py
+    volumes:
+      - ./demo_paths:/app/demo_paths
+      - ./models:/app/models
+      - ./output:/app/output
+      - ./llm-camera-tracker:/app/llm-camera-tracker
+    devices:
+      - /dev/snd:/dev/snd
+      - /dev/video0:/dev/video0
+    privileged: true
+    stdin_open: true
+    tty: true
+    restart: "no"
+    networks:
+      - echowear-network
+
+  echowear-camera-test:
+    build: .
+    container_name: echowear-camera-test
+    command: python test_camera.py
+    volumes:
+      - ./demo_paths:/app/demo_paths
+      - ./models:/app/models
+      - ./output:/app/output
+      - ./llm-camera-tracker:/app/llm-camera-tracker
+    devices:
+      - /dev/snd:/dev/snd
+      - /dev/video0:/dev/video0
+    privileged: true
+    stdin_open: true
+    tty: true
+    restart: "no"
+    networks:
+      - echowear-network
+
+  scene-graph-server:
+    build: .
+    container_name: scene-graph-server
+    working_dir: /app/llm-camera-tracker
+    command: python scene_graph_server.py
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./demo_paths:/app/demo_paths
+      - ./models:/app/models
+      - ./output:/app/output
+      - ./llm-camera-tracker:/app/llm-camera-tracker
+    environment:
+      - PYTHONPATH=/app
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - echowear-network
+
+networks:
+  echowear-network:
+    driver: bridge
