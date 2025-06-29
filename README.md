@@ -2,11 +2,12 @@
 
 EchoWear is an advanced AI-powered navigation assistant designed to help visually impaired users navigate indoor and outdoor environments with intelligent scene understanding. This prototype demonstrates the future of wearable AI navigation glasses with real-time computer vision, object detection, scene graph construction, and voice guidance.
 
-![EchoWear Navigation System](https://github.com/user-attachments/assets/106ea61b-35cd-4dcf-8884-50ffa628f79b)
+![1c12cf55-2925-4685-9058-8f456172d404](https://github.com/user-attachments/assets/8e0a2e1a-7054-40cd-bfde-faaa74daddf9)
+
 
 *In honor of Dr. Ammar Mohanna for his invaluable contributions to the AI community in Lebanon and continuous support.*
 
-## 🚀 Major Updates (Latest Release)
+## Updates (Latest Release)
 
 ### ✨ Scene Graph Intelligence
 - **Hierarchical Scene Understanding**: Advanced scene graph construction using hierarchical graph builders
@@ -24,6 +25,9 @@ EchoWear is an advanced AI-powered navigation assistant designed to help visuall
 
 ### 🎯 New Features
 - **GPS Navigation with Obstacle Detection**: Real-time GPS navigation with camera-based obstacle detection
+- 
+ ![4266ef51-4aff-4ee5-9b32-fce0ec474b36](https://github.com/user-attachments/assets/7eb4f836-74ee-4b76-a271-3869bd620f07)
+
 - **Enhanced TTS Voice Guidance**: Comprehensive voice feedback with obstacle warnings
 - **Multi-Path Management**: Create and manage multiple navigation paths with destinations
 - **Scene Graph Visualization**: Visual representation of detected objects and relationships
@@ -380,13 +384,6 @@ python -c "import pyttsx3; engine = pyttsx3.init(); engine.say('Test'); engine.r
 ## 📄 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🙏 Acknowledgments
-
-- **Dr. Ammar Mohanna**: For his contributions to the AI community in Lebanon
-- **OpenCV Community**: For computer vision capabilities
-- **spaCy Team**: For natural language processing
-- **Docker Community**: For containerization support
 
 ---
 
