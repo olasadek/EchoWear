@@ -25,8 +25,7 @@ EchoWear is an advanced AI-powered navigation assistant designed to help visuall
 
 ### 🎯 New Features
 - **GPS Navigation with Obstacle Detection**: Real-time GPS navigation with camera-based obstacle detection
-- 
- ![4266ef51-4aff-4ee5-9b32-fce0ec474b36](https://github.com/user-attachments/assets/7eb4f836-74ee-4b76-a271-3869bd620f07)
+<img width="655" alt="gps" src="https://github.com/user-attachments/assets/761ddc08-8154-45a0-a25e-1c37233ad216" />
 
 - **Enhanced TTS Voice Guidance**: Comprehensive voice feedback with obstacle warnings
 - **Multi-Path Management**: Create and manage multiple navigation paths with destinations
