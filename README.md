@@ -5,7 +5,7 @@ EchoWear is an advanced AI-powered navigation assistant designed to help visuall
 ![1c12cf55-2925-4685-9058-8f456172d404](https://github.com/user-attachments/assets/8e0a2e1a-7054-40cd-bfde-faaa74daddf9)
 
 
-*In honor of Dr. Ammar Mohanna for his invaluable contributions to the AI community in Lebanon and continuous support.*
+
 
 ## Updates (Latest Release)
 
@@ -388,3 +388,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ---
 
 *⚠️ Disclaimer: This project is a prototype for research and educational purposes. It is not intended for medical or safety-critical use. Always ensure proper safety measures when testing navigation systems.*
+*In honor of Dr. Ammar Mohanna for his invaluable contributions to the AI community in Lebanon and continuous support.*
