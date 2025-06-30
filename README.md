@@ -2,7 +2,8 @@
 
 EchoWear is an advanced AI-powered navigation assistant designed to help visually impaired users navigate indoor and outdoor environments with intelligent scene understanding. This prototype demonstrates the future of wearable AI navigation glasses with real-time computer vision, object detection, scene graph construction, and voice guidance.
 
-![image](https://github.com/user-attachments/assets/1214c608-abad-45a2-8f55-3e834cad84a7)
+![image](https://github.com/user-attachments/assets/0454f07d-f029-4328-9a3b-eb9a5e811715)
+
 
 
 
