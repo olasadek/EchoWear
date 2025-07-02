@@ -4,7 +4,7 @@ EchoWear is an advanced AI-powered navigation assistant designed to help visuall
 
 ![image](https://github.com/user-attachments/assets/0454f07d-f029-4328-9a3b-eb9a5e811715)
 
-
+**In honor of DR. Ammar Mohanna and his invaluable contributions to the AI community.**
 
 
 
