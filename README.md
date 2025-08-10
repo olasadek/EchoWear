@@ -83,7 +83,7 @@ Visual Odometry → Keypoint Matching → Spatial Mapping → Path Guidance → 
 
 1. **Clone and Setup**
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/olasadek/EchoWear.git
 cd EchoWear
 chmod +x docker-run.sh
 ```
