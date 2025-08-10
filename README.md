@@ -372,5 +372,5 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ---
 
-*⚠️ Disclaimer: This project is a prototype for research and educational purposes. It is not intended for medical or safety-critical use. Always ensure proper safety measures when testing navigation systems.*
+*⚠️ Disclaimer: This project is a prototype for research and educational purposes. It is not intended for medical or safety-critical use.*
 *In honor of DR. Ammar Mohanna and his invaluable contributions to the AI community.*
