@@ -1,0 +1,3 @@
+[submodule "llm-camera-tracker"]
+	path = llm-camera-tracker
+	url = https://github.com/AmmarMohanna/llm-camera-tracker.git
