@@ -13,16 +13,7 @@ import time
 
 # Import object detector
 try:
-    # Add the llm-camera-tracker directory to Python path
-    sys.path.insert(0, 'llm-camera-tracker')
-    spec = importlib.util.spec_from_file_location(
-        "object_detector", 
-        "llm-camera-tracker/camera_processor/object_detector.py"
-    )
-    object_detector_module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(object_detector_module)
-    ObjectDetector = object_detector_module.ObjectDetector
-    DetectionBackend = object_detector_module.DetectionBackend
+    from camera_processor.object_detector import ObjectDetector, DetectionBackend
     OBJECT_DETECTION_AVAILABLE = True
 except ImportError as e:
     print(f"Warning: Object detection not available. Error: {e}")
@@ -133,7 +124,8 @@ class PathManager:
             try:
                 self.object_detector = ObjectDetector(
                     backend=DetectionBackend.OPENCV_DNN,
-                    confidence_threshold=detection_confidence
+                    confidence_threshold=detection_confidence,
+                    model_path="models"
                 )
                 print("Object detection enabled")
             except Exception as e:

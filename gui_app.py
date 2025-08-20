@@ -74,12 +74,7 @@ class EchoWearGUI:
     def _init_scene_graph(self):
         """Initialize scene graph detection."""
         try:
-            # Add the llm-camera-tracker directory to Python path
-            camera_tracker_path = os.path.join(os.path.dirname(__file__), "llm-camera-tracker")
-            if camera_tracker_path not in sys.path:
-                sys.path.insert(0, camera_tracker_path)
-            
-            # Import scene graph components
+            # Import scene graph components from local module
             from scene_graph.hierarchical_graph_builder import HierarchicalGraphBuilder
             from scene_graph.graph_builder import SceneGraphBuilder
             from scene_graph.graph_store import GraphStore
